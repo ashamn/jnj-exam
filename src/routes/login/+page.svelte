@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types.js';
-	import LoginForm from './login-form.svelte';
+	import { LoginForm } from '$lib/components/ui/pages/login';
 	export let data: PageData;
 </script>
 

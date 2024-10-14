@@ -43,5 +43,10 @@
 		"vitest": "^2.0.0",
 		"zod": "^3.23.8"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/ssr": "^0.5.1",
+		"@supabase/supabase-js": "^2.45.4",
+		"lucide-svelte": "^0.452.0"
+	}
 }
