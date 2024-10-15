@@ -47,6 +47,17 @@
 	"dependencies": {
 		"@supabase/ssr": "^0.5.1",
 		"@supabase/supabase-js": "^2.45.4",
-		"lucide-svelte": "^0.452.0"
-	}
+		"lucide-svelte": "^0.452.0",
+		"replicate": "^1.0.0",
+		"svelte-sonner": "^0.3.28",
+		"svelte-typewriter": "^3.2.3"
+	},
+	"description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).",
+	"main": "eslint.config.js",
+	"directories": {
+		"test": "tests"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }

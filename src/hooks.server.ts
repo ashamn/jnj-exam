@@ -3,6 +3,7 @@ import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { NAVPAGES } from '$lib/constants/nav';
 
 const supabase: Handle = async ({ event, resolve }) => {
 	/**
@@ -67,16 +68,23 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	event.locals.user = user;
 
-	if (!event.locals.session && event.url.pathname.startsWith('/main')) {
-		redirect(303, '/login');
+	const storyPath = NAVPAGES.STORY.path;
+	const realTimePath = NAVPAGES.RUNTIME.path;
+	const loginPath = NAVPAGES.LOGIN.path;
+	const rootPath = '/';
+
+	if (
+		!event.locals.session &&
+		(event.url.pathname.startsWith(storyPath) || event.url.pathname.startsWith(realTimePath))
+	) {
+		redirect(303, loginPath);
 	}
 
-	if (event.locals.session && event.url.pathname === '/login') {
-		redirect(303, '/main');
-	}
-
-	if (event.locals.session && event.url.pathname === '/') {
-		redirect(303, '/main');
+	if (
+		event.locals.session &&
+		(event.url.pathname === loginPath || event.url.pathname === rootPath)
+	) {
+		redirect(303, storyPath);
 	}
 
 	return resolve(event);
