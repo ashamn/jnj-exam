@@ -18,8 +18,8 @@ export const actions: Actions = {
 				form
 			});
 		}
-		console.log('input :>> ', input);
-		/** Run replicate **/
+
+		/** Setup replicate **/
 		const replicate = new Replicate({
 			auth: REPLICATE_API_TOKEN
 		});
@@ -36,17 +36,11 @@ export const actions: Actions = {
 			log_performance_metrics: false
 		};
 		const model = 'meta/meta-llama-3-8b';
-		// const model =
-		// 	'replicate-internal/llama-3-8b-int8-1xa100-80gb-triton:cfac02c2b5d75999a95c6f102247bd40bd03feddc92d925b253a4c012a722596';
-		// // const aa = await replicate.run('meta/meta-llama-3-8b', { input: payload });
-		// // console.log('7734534', aa);
-		// function onProgress(prediction: Prediction) {
-		// 	console.log({ prediction });
-		// }
 
-		// const progress = async (prediction: Prediction) => prediction
-
+		/** Run a prediction **/
 		const prediction = await replicate.predictions.create({ model, input: payload });
+
+		/** Data polling to get the output **/
 		const pollData = async () => {
 			return await new Promise((resolve, reject) => {
 				const interval = setInterval(async () => {
@@ -63,6 +57,11 @@ export const actions: Actions = {
 							resolve(data.output);
 							clearInterval(interval);
 						}
+
+						if (data.status === 'canceled') {
+							resolve('');
+							clearInterval(interval);
+						}
 					} catch (error: unknown) {
 						let result = '';
 						if (typeof error === 'string') {
@@ -73,45 +72,16 @@ export const actions: Actions = {
 						reject(`Error connecting to replicate - ${result}`);
 						clearInterval(interval);
 					}
-				}, 10000);
+				}, 4000);
 			});
 		};
 
+		/** Modify the output **/
 		const output = await pollData();
-		console.log('output :>> ', output);
 		const generated = Array.isArray(output) && !!output.length ? `${input} ${output.join('')}` : '';
-
-		// const output = await pollData();
-		// console.log('rt :>> ', { output });
-
-		// const prediction = await replicate.predictions.create({
-		// 	model: "meta/meta-llama-3-8b",
-		// 	input: payload,
-		// 	stream: true,
-		// });
-
-		// for await (const event of replicate.stream('meta/meta-llama-3-8b', { input: payload })) {
-		// 	process.stdout.write(event.toString());
-		// 	// console.log('event.toString() :>> ', event.toString());
-		// }
-		// console.log('REPLICATE_API_TOKEN :>> ', REPLICATE_API_TOKEN);
-
-		// const aa = await fetch('https://api.replicate.com/v1/predictions/rvjakfp881rj20cjhrs93rx9tc', {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: 'Bearer ' + REPLICATE_API_TOKEN
-		// 	}
-		// });
-
-		// const bb = await aa.json();
-		// console.log('bb :>> ', bb);
 
 		return {
 			form,
-			// generated: await new Promise((resolve) =>
-			// 	setTimeout(() => resolve(['asdas', 'asdasdsad']), 5000)
-			// )
 			generated
 		};
 	}

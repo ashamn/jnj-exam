@@ -47,9 +47,7 @@
 			on:click={logout}>Logout</Button
 		>
 	</nav>
-	<div class="flex justify-center items-center flex-col">
-		<div class="w-2/3">
-			<slot />
-		</div>
+	<div class="flex justify-center items-center flex-col mt-20">
+		<slot />
 	</div>
 </div>
