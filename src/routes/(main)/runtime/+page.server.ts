@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { API_BASE_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { API } from '$lib/constants/routes';
 import type { RuntimeType } from '$lib/types/runtime';
 
@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 			const session = await supabase.auth.getSession();
 			const token = session.data.session.access_token;
 			/** Fetch runtime data for preloading **/
-			const response = await fetch(`${API_BASE_URL}${API.RUNTIME.BACKEND_URL}`, {
+			const response = await fetch(`${env.API_BASE_URL}${API.RUNTIME.BACKEND_URL}`, {
 				headers: {
 					Authorization: `Bearer ${token}`
 				}

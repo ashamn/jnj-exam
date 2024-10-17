@@ -5,7 +5,7 @@ import { storySchema } from '$lib/schemas/story';
 import type { PageServerLoad, Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import Replicate from 'replicate';
-import { REPLICATE_API_TOKEN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const actions: Actions = {
 	generate: async ({ request }) => {
@@ -21,7 +21,7 @@ export const actions: Actions = {
 
 		/** Setup replicate **/
 		const replicate = new Replicate({
-			auth: REPLICATE_API_TOKEN
+			auth: env.REPLICATE_API_TOKEN
 		});
 		const payload = {
 			top_k: 0,
@@ -49,7 +49,7 @@ export const actions: Actions = {
 							method: 'GET',
 							headers: {
 								'Content-Type': 'application/json',
-								Authorization: 'Bearer ' + REPLICATE_API_TOKEN
+								Authorization: 'Bearer ' + env.REPLICATE_API_TOKEN
 							}
 						});
 						const data: { output: Array<string>; status: string } = await fetched.json();
