@@ -9,8 +9,8 @@
 <section class="w-2/3">
 	<StoryForm data={data.form} bind:isDataLoading />
 	{#if form?.generated && !isDataLoading}
-		<div class="py-16">
+		<pre class="py-16 whitespace-pre-line">
 			<StoryOutput data={form?.generated} />
-		</div>
+		</pre>
 	{/if}
 </section>
