@@ -29,7 +29,7 @@
 </script>
 
 <form method="POST" action="?/generate" class="w-full" use:enhance>
-	<Form.Field {form} name="input">
+	<Form.Field {form} name="input" class="space-y-5">
 		<Form.Control let:attrs>
 			<Form.Label class="!text-current">Story Generator</Form.Label>
 			<Textarea
@@ -42,7 +42,7 @@
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
-	<Form.Button disabled={!!$delayed}>
+	<Form.Button class="mt-5" disabled={!!$delayed}>
 		{#if $delayed}
 			<LoaderCircle class="mr-2 h-4 w-4 animate-spin text-white" />
 		{/if}

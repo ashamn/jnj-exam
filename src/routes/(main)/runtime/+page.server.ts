@@ -27,7 +27,8 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 					Authorization: `Bearer ${token}`
 				}
 			});
-			if (response.ok) {
+
+			if (response.ok || response.status === 200) {
 				return await response.json();
 			}
 

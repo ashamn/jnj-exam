@@ -23,21 +23,21 @@
 	};
 </script>
 
-<div class="p-5 pt-1 mx-14">
+<div class="pt-1 md:mx-14 md:p-5">
 	<nav class="relative px-4 py-4 flex justify-between items-center bg-white">
-		<ul
-			class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6"
-		>
+		<ul class="flex flex-row items-center">
 			{#each navlinks as { name, path, active }, index}
 				{#if active}
 					<li>
 						<a class="text-sm text-blue-600 font-bold pointer-events-none" href={path}>{name}</a>
 					</li>
 				{:else}
-					<li><a class="text-sm text-gray-400 hover:text-gray-500" href={path}>{name}</a></li>
+					<li>
+						<a class="text-sm text-gray-400 hover:text-gray-500" href={path}>{name}</a>
+					</li>
 				{/if}
 				{#if !(index === navlinks.length - 1)}
-					<li class="text-gray-300">|</li>
+					<li class="text-gray-300 px-5">|</li>
 				{/if}
 			{/each}
 		</ul>
