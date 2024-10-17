@@ -79,7 +79,9 @@ const authGuard: Handle = async ({ event, resolve }) => {
 
 	if (
 		!event.locals.session &&
-		(event.url.pathname.startsWith(storyPath) || event.url.pathname.startsWith(realTimePath))
+		(event.url.pathname.startsWith(storyPath) ||
+			event.url.pathname.startsWith(realTimePath) ||
+			event.url.pathname === rootPath)
 	) {
 		redirect(303, loginPath);
 	}
